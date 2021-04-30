@@ -1,9 +1,4 @@
 #include "MathFunctions.h"
-#include <math.h>
-#include <fastmath.h>
-#include "Coordinates.h"
-#include "ControlModel.h"
-#include "PIDModel.h""
 
 const float ACC_COEFICIENT = 0.01;
 const float GYRO_COEFICIENT = 0.99;
@@ -123,4 +118,3 @@ float MathFunctions::CalculatePID(float input, float target, PID *pid)
 
     return *pid.Proportional + *pid.Integral + *pid.Derivative;
 }
-

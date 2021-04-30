@@ -5,6 +5,7 @@
 #include <fastmath.h>
 #include "Coordinates.h"
 #include "ControlModel.h"
+#include "PIDModel.h"
 
 #define PI 3.1415926535897932384626433832795
 

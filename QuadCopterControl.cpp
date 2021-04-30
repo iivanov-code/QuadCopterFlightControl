@@ -1,18 +1,18 @@
 #include "QuadCopterControl.h"
-#include "Sensors.h"
-#include "MultiMotorControl.h"
-#include "QuadCopterTypes.h"
 
-#define HEIGHT 10
-#define LENGTH 10
-#define A (HEIGHT * DeltaT / (2 * IXX)) // Constant a c t ing on pi t ch
-#define B (LENGTH * DeltaT / (2 * IYY)) // Constant a c t ing on r o l l
-
-QuadCopterControl::QuadCopterControl(uint8_t *motorPins, uint8_t height, uint8_t length)
+QuadCopterControl::QuadCopterControl(uint8_t *motorPins, float mass, float gravity = 9.8)
 {
-    functions = new MathFunctions();
-    motors = new MultiMotorControl(4, motorPins, false);
-    sensors = new Sensors();
+    int motorsCount = 4;
+
+    this.gravity = gravity;
+    this.mass = mass;
+    this.functions = new MathFunctions();
+    this.motors = new MultiMotorControl(motorsCount, motorPins, false);
+    this.motorThrottles = new float[motorsCount];
+    this.sensors = new Sensors();
+    this.rollPid = new PIDModel();
+    this.pitchPid = new PIDModel();
+    this.yawPid = new PIDModel();
 
     imuControlValues.Roll = 0;
     imuControlValues.Yaw = 0;
@@ -48,33 +48,73 @@ void QuadCopterControl::Thrust(int8_t power)
     remoteControlValues.Throttle = power;
 }
 
-void QuadCopterControl::GetControlErrors()
+ControlErrors QuadCopterControl::GetControlErrors()
 {
     float controlRoll = functions.CalculatePID(imuControlValues.Roll, remoteControlValues.Roll, rollPid);
     float controlPitch = functions.CalculatePID(imuControlValues.Pitch, remoteControlValues.Pitch, pitchPid);
     float controlYaw = functions.CalculatePID(imuControlValues.Yaw, remoteControlValues.Yaw, yawPid);
 
-    ApplyRoll(controlRoll);
-    ApplyPitch(controlPitch);
-    ApplyYaw(controlYaw);
+    ControlErrors errors;
+    errors.ControlRoll = controlRoll;
+    errors.ControlPitch = controlPitch;
+    errors.ControlYaw = controlYaw;
+
+    return errors;
 }
 
 void QuadCopterControl::ApplyPitch(float controlPitch)
 {
-    uint8_t throttle = 1 / controlPitch
-
-                       * motors.getMotor(0).Up();
-    *motors.getMotor(1).
-         *motors.getMotor(2)
-             .
-                 *motors.getMotor(3)
-             .
+    short throttle = (short)controlPitch;
+    *motorThrottles[0] += throttle;
+    *motorThrottles[1] += throttle;
+    *motorThrottles[2] -= throttle;
+    *motorThrottles[3] -= throttle;
 }
 
 void QuadCopterControl::ApplyRoll(float controlRoll)
 {
+    short throttle = (short)controlRoll;
+    *motorThrottles[0] += throttle;
+    *motorThrottles[1] -= throttle;
+    *motorThrottles[2] -= throttle;
+    *motorThrottles[3] += throttle;
 }
 
 void QuadCopterControl::ApplyYaw(float controlYaw)
 {
+    short throttle = (short)controlYaw;
+    *motorThrottles[0] += throttle;
+    *motorThrottles[1] -= throttle;
+    *motorThrottles[2] += throttle;
+    *motorThrottles[3] -= throttle;
+}
+
+void QuadCopterControl::ApplyThrottle()
+{
+    float mgFactor = CalculateGravityCompensation(mass, gravity, imuControlValues.Pitch, imuControlValues.Roll);
+    float throttle = remoteControlValues.Throttle + mgFactor;
+
+    *motorThrottles[0] = throttle;
+    *motorThrottles[1] = throttle;
+    *motorThrottles[2] = throttle;
+    *motorThrottles[3] = throttle;
+}
+
+void QuadCopterControl::RunControlLoop()
+{
+    ApplyThrottle();
+    ControlErrors errors = GetControlErrors();
+    ApplyPitch(errors.ControlPitch);
+    ApplyRoll(errros.ControlRoll);
+    ApplyYaw(errors.ControlYaw);
+
+    *motors.getMotor(0).ChangeThrottle((short)motorThrottles[0]));
+    *motors.getMotor(1).ChangeThrottle((short)motorThrottles[1]);
+    *motors.getMotor(2).ChangeThrottle((short)motorThrottles[2]);
+    *motors.getMotor(3).ChangeThrottle((short)motorThrottles[3]);
+}
+
+float QuadCopterControl::CalculateGravityCompensation(float mass, float gravity, float pitch, float roll)
+{
+    return (mass * gravity / 4) * cos(pitch) * cos(roll);
 }
