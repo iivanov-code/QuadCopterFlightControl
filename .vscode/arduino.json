@@ -1,6 +1,6 @@
 {
     "sketch": "FlightControl.ino",
     "port": "COM7",
-    "board": "arduino:mbed:nano33ble",
+    "board": "arduino:mbed_nano:nano33ble",
     "output": "../build"
 }

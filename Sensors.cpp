@@ -13,18 +13,6 @@ Sensors::Sensors()
     magneticField.Z = 0;
 }
 
-bool Sensors::initializeTempAndHumiditySensor()
-{
-    if (HTS.begin())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 int Sensors::getTemperature()
 {
     //CELSIUS
@@ -37,36 +25,12 @@ int Sensors::getHumidity()
     return HTS.readHumidity();
 }
 
-bool Sensors::initializeBarometricSensor()
-{
-    if (BARO.begin())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 float Sensors::getPressure()
 {
     //KILOPASCAL
     //MILLIBAR
     //PSI
     return BARO.readPressure(KILOPASCAL);
-}
-
-bool Sensors::initializeIMUSensor()
-{
-    if (IMU.begin())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
 }
 
 Coordinates Sensors::getAccelerationDirection()
@@ -79,7 +43,7 @@ Coordinates Sensors::getAccelerationDirection()
         acceleration.Y = y;
         acceleration.Z = z;
     }
-    
+
     return acceleration;
 }
 
@@ -93,7 +57,7 @@ Coordinates Sensors::getGyroscopeDirection()
         gyroscope.Y = y;
         gyroscope.Z = z;
     }
-    
+
     return gyroscope;
 }
 
@@ -110,3 +74,77 @@ Coordinates Sensors::getMagneticField()
 
     return magneticField;
 }
+
+Coordinates Sensors::getCalibratedMagneticField()
+{
+    Coordinates coords = getMagneticField();
+
+    float x = CalculateNormalizedValue(coords.X, magneticFieldMinValues.X, magneticFieldMaxValues.X);
+    float y = CalculateNormalizedValue(coords.Y, magneticFieldMinValues.Y, magneticFieldMaxValues.Y);
+    float z = CalculateNormalizedValue(coords.Z, magneticFieldMinValues.Z, magneticFieldMaxValues.Z);
+
+    magneticField.X = x;
+    magneticField.X = x;
+    magneticField.X = x;
+
+    return magneticField;
+}
+
+void Sensors::CalibrateMagnetoMeter()
+{
+    delay(1000);
+
+}
+
+#pragma region Initialization
+bool Sensors::initializeAll()
+{
+    bool initializedTemp = initializeTempAndHumiditySensor();
+    bool initializedIMU = initializeIMUSensor();
+    bool initializedBaro = initializeBarometricSensor();
+    return initializedTemp && initializedIMU && initializedBaro;
+}
+
+bool Sensors::initializeIMUSensor()
+{
+    if (IMU.begin())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Sensors::initializeBarometricSensor()
+{
+    if (BARO.begin())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Sensors::initializeTempAndHumiditySensor()
+{
+    if (HTS.begin())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+#pragma endregion
+
+#pragma region Private
+float Sensors::CalculateNormalizedValue(float value, float min, float max)
+{
+    return 2 * ((value - min) / (max - min)) - 1;
+}
+#pragma endregion

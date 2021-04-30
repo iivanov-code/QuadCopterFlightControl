@@ -1,47 +1,47 @@
-#include "MultiMotorControl.h"
-//#include "Pins.h"
+#include "Sensors.h"
+#include "String.h"
 
-MultiMotorControl *motorsControler;
+Sensors *sensors;
+bool sensorsInitilized = false;
+
+Coordinates gyroCoordinates;
+Coordinates magneticFieldCoordinates;
+Coordinates accelerometedCoordinates;
 
 void setup()
 {
-  uint8_t *pins = new uint8_t[4];
-  pins[0] = D2;
-  pins[1] = D3;
-  pins[2] = D4;
-  pins[3] = D5;
+  Serial.begin(9600);
+  sensors = new Sensors();
+  sensorsInitilized = sensors->initializeAll();
+}
 
-  motorsControler = new MultiMotorControl(0x1, pins);
+
+void PrintCoordinates(String sensorName, Coordinates coordinates)
+{
+  Serial.print(sensorName);
+  Serial.print(" X: ");
+  Serial.print(coordinates.X);
+  Serial.print(" Y: ");
+  Serial.print(coordinates.Y);
+  Serial.print(" Z: ");
+  Serial.println(coordinates.Z);
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-  short percentage = 3;
-  short step = 10;
-
-  ThrottleControl *control = motorsControler->getMotor(0u);
-  control->Up(3);
-  wait_ns(2000);
-  control->Down(100);
-
-  Serial.println("Start stepping UP");
-
-  for (int i = 0; i < 10; i++)
+  if (Serial)
   {
-    percentage += step;
-    control->Up(percentage);
-    wait_ns(5000);
+    if (sensorsInitilized)
+    {
+      gyroCoordinates = sensors->getGyroscopeDirection();
+      magneticFieldCoordinates = sensors->getMagneticField();
+      accelerometedCoordinates = sensors->getAccelerationDirection();
+    }
+
+    PrintCoordinates("Gyro", gyroCoordinates);
+    PrintCoordinates("Magneto", magneticFieldCoordinates);
+    PrintCoordinates("Accelerometer", accelerometedCoordinates);
   }
 
-  Serial.println("Start stepping DOWN");
-
-  for (int i = 0; i < 10; i++)
-  {
-    percentage -= step;
-    control->Down(percentage);
-    wait_ns(5000);
-  }
-
-  Serial.println("Procedure finished!");
+  delay(5000);
 }
