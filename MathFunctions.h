@@ -6,22 +6,19 @@
 #include "Coordinates.h"
 #include "ControlModel.h"
 #include "PIDModel.h"
-
-#define PI 3.1415926535897932384626433832795
+#include "ConstConfig.h"
 
 class MathFunctions
 {
 public:
-    float GetPitchAngle(Coordinates acc);
-    float GetRollAngle(Coordinates acc);
-    float GetYawAngle(Coordinates mag);
-    float GetYawAngleCompensation(Coordinates mag, float pitch, float roll);
-    
-    ControlModel ComputeFilter(Coordinates rawAcc, Coordinates rawMag, Coordinates *acc, Coordinates *mag, Coordinates *gyro);
-    float CalculatePID(float input, float target, PIDModel *pid);
-    
+    static float GetPitchAngle(Coordinates acc);
+    static float GetRollAngle(Coordinates acc);
+    static float GetYawAngle(Coordinates mag);
+    static float GetYawAngleCompensation(Coordinates mag, float pitch, float roll);
+    static ControlModel ComputeFilter(Coordinates rawAcc, Coordinates rawMag, Coordinates *acc, Coordinates *mag, Coordinates *gyro);
+    static float CalculatePID(float input, float target, PIDModel *pid);
 
 private:
-    ControlModel controlValues;
+    MathFunctions();
 };
 #endif

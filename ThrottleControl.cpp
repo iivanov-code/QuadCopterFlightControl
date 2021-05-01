@@ -13,46 +13,14 @@ ThrottleControl::ThrottleControl(uint8_t _pin, bool _bidirectional)
   pinMode(pin, OUTPUT);
 }
 
-uint8_t ThrottleControl::Down(short percentage)
+uint8_t ThrottleControl::ChangeThrottle(uint8_t throttle)
 {
-  if ((currentThrottle - (uint8_t)percentage) >= 0)
-  {
-    currentThrottle -= (uint8_t)percentage;
-  }
-  else
-  {
-    currentThrottle = 0;
-  }
-
-  ChangeThrottle(currentThrottle);
-
-  return currentThrottle;
-}
-
-uint8_t ThrottleControl::Up(short percentage)
-{
-  if ((currentThrottle + (uint8_t)percentage) <= MAX_PERCENTAGE)
-  {
-    currentThrottle += (uint8_t)percentage;
-  }
-  else
-  {
-    this->currentThrottle = MAX_PERCENTAGE;
-  }
-
-  ChangeThrottle(currentThrottle);
-
-  return currentThrottle;
-}
-
-uint8_t ThrottleControl::ChangeThrottle(short percentage)
-{
-  currentThrottle = ConvertToThrottle(percentage);
+  currentThrottle = throttle;
   analogWrite(pin, currentThrottle);
   return currentThrottle;
 }
 
-uint8_t ThrottleControl::ConvertToThrottle(short percentage)
+uint8_t ThrottleControl::ConvertToThrottle(float percentage)
 {
   if (bidirectional)
   {
@@ -65,7 +33,7 @@ uint8_t ThrottleControl::ConvertToThrottle(short percentage)
       uint8_t halfThrottle = (MAX_THROTTLE / 2);
       return halfThrottle + ((halfThrottle * percentage) / MAX_PERCENTAGE);
     }
-    
+
     return 0;
   }
   else

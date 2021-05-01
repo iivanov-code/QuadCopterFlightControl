@@ -2,15 +2,7 @@
 
 Sensors::Sensors()
 {
-    acceleration.X = 0;
-    acceleration.Y = 0;
-    acceleration.Z = 0;
-    gyroscope.X = 0;
-    gyroscope.Y = 0;
-    gyroscope.Z = 0;
-    magneticField.X = 0;
-    magneticField.Y = 0;
-    magneticField.Z = 0;
+
 }
 
 int Sensors::getTemperature()
