@@ -1,5 +1,4 @@
 #include "Sensors.h"
-#include "String.h"
 
 Sensors *sensors;
 bool sensorsInitilized = false;

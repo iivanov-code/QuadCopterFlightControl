@@ -84,8 +84,8 @@ Coordinates Sensors::getCalibratedMagneticField()
     float z = CalculateNormalizedValue(coords.Z, magneticFieldMinValues.Z, magneticFieldMaxValues.Z);
 
     magneticField.X = x;
-    magneticField.X = x;
-    magneticField.X = x;
+    magneticField.Y = y;
+    magneticField.Z = z;
 
     return magneticField;
 }
@@ -93,10 +93,8 @@ Coordinates Sensors::getCalibratedMagneticField()
 void Sensors::CalibrateMagnetoMeter()
 {
     delay(1000);
-
 }
 
-#pragma region Initialization
 bool Sensors::initializeAll()
 {
     bool initializedTemp = initializeTempAndHumiditySensor();
@@ -140,11 +138,8 @@ bool Sensors::initializeTempAndHumiditySensor()
         return false;
     }
 }
-#pragma endregion
 
-#pragma region Private
 float Sensors::CalculateNormalizedValue(float value, float min, float max)
 {
     return 2 * ((value - min) / (max - min)) - 1;
 }
-#pragma endregion

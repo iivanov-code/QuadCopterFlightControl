@@ -5,6 +5,6 @@ struct ControlErrors
     float ControlRoll;
     float ControlPitch;
     float ControlYaw;
-}
+};
 
 #endif

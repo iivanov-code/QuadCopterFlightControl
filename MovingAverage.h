@@ -2,14 +2,14 @@
 // based on RunningAverage library for Arduino
 // source:  http://playground.arduino.cc/Main/RunningAverage
 
-#ifndef RUNNING_AVERAGE
-#define RUNNING_AVERAGE
+#ifndef MOVING_AVERAGE
+#define MOVING_AVERAGE
 
-template <typename T> class RunningAverage
+template <typename T> class MovingAverage
 {
   public:
-    RunningAverage(int count = 3);
-    ~RunningAverage();
+    MovingAverage(int count = 3);
+    ~MovingAverage();
     void Clear();
     void Add(T);
     T GetAverage() const;
@@ -25,6 +25,6 @@ template <typename T> class RunningAverage
     static T Zero;
 };
 
-template class RunningAverage<int>;
+template class MovingAverage<int>;
 
 #endif

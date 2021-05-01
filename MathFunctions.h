@@ -18,7 +18,7 @@ public:
     float GetYawAngleCompensation(Coordinates mag, float pitch, float roll);
     
     ControlModel ComputeFilter(Coordinates rawAcc, Coordinates rawMag, Coordinates *acc, Coordinates *mag, Coordinates *gyro);
-    float CalculatePID(float input, float target, PID *pid);
+    float CalculatePID(float input, float target, PIDModel *pid);
     
 
 private:

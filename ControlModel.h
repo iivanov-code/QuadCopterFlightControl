@@ -6,6 +6,6 @@ struct ControlModel
     float Pitch;
     float Roll;
     float Yaw;
-    int8_t Throttle; 
+    int Throttle;
 };
 #endif

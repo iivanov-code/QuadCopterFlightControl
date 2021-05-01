@@ -1,27 +1,27 @@
-#include "RunningAverage.h"
+#include "MovingAverage.h"
 
-template <typename T> T RunningAverage<T>::Zero = (T)0;
+template <typename T> T MovingAverage<T>::Zero = (T)0;
 
 
-template <typename T> RunningAverage<T>::RunningAverage(int n)
+template <typename T> MovingAverage<T>::MovingAverage(int n)
 {
   Size = n;
   dataArray = new T[Size];
   Clear();
 }
 
-template <typename T> RunningAverage<T>::~RunningAverage()
+template <typename T> MovingAverage<T>::~MovingAverage()
 {
   delete dataArray;
 }
 
-template <typename T> int RunningAverage<T>::getSize()
+template <typename T> int MovingAverage<T>::getSize()
 {
   return Size;
 }
 
 // resets all counters
-template <typename T> void RunningAverage<T>::Clear()
+template <typename T> void MovingAverage<T>::Clear()
 {
   Count = 0;
   PrevAverageValue = Zero;
@@ -31,7 +31,7 @@ template <typename T> void RunningAverage<T>::Clear()
 }
 
 // adds a new value to the data-set
-template <typename T> void RunningAverage<T>::Add(T f)
+template <typename T> void MovingAverage<T>::Add(T f)
 {
   SUM -= dataArray[_idx];
   dataArray[_idx] = f;
@@ -42,7 +42,7 @@ template <typename T> void RunningAverage<T>::Add(T f)
 }
 
 // returns the average of the data-set added so far
-template <typename T> T RunningAverage<T>::GetAverage() const
+template <typename T> T MovingAverage<T>::GetAverage() const
 {
   if (Count == 0) return Zero; // NaN ?  math.h
   return SUM / Count;
@@ -51,7 +51,7 @@ template <typename T> T RunningAverage<T>::GetAverage() const
 // fill the average with a value
 // the param number determines how often value is added (weight)
 // number should preferably be between 1 and size
-template <typename T> void RunningAverage<T>::FillValue(T value, int number)
+template <typename T> void MovingAverage<T>::FillValue(T value, int number)
 {
   Clear();
   for (int i = 0; i < number; i++)
