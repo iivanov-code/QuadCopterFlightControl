@@ -1,23 +1,18 @@
 #include "Sensors.h"
 
-Sensors::Sensors()
-{
-
-}
-
-int Sensors::getTemperature()
+int Sensors::GetTemperature()
 {
     //CELSIUS
     //FAHRENHEIT
     return HTS.readTemperature(CELSIUS);
 }
 
-int Sensors::getHumidity()
+int Sensors::GetHumidity()
 {
     return HTS.readHumidity();
 }
 
-float Sensors::getPressure()
+float Sensors::GetPressure()
 {
     //KILOPASCAL
     //MILLIBAR
@@ -25,7 +20,7 @@ float Sensors::getPressure()
     return BARO.readPressure(KILOPASCAL);
 }
 
-Coordinates Sensors::getAccelerationDirection()
+Coordinates Sensors::GetAccelerationDirection()
 {
     if (IMU.accelerationAvailable())
     {
@@ -39,7 +34,7 @@ Coordinates Sensors::getAccelerationDirection()
     return acceleration;
 }
 
-Coordinates Sensors::getGyroscopeDirection()
+Coordinates Sensors::GetGyroscopeDirection()
 {
     if (IMU.gyroscopeAvailable())
     {
@@ -53,7 +48,7 @@ Coordinates Sensors::getGyroscopeDirection()
     return gyroscope;
 }
 
-Coordinates Sensors::getMagneticField()
+Coordinates Sensors::GetMagneticField()
 {
     if (IMU.magneticFieldAvailable())
     {
@@ -67,7 +62,7 @@ Coordinates Sensors::getMagneticField()
     return magneticField;
 }
 
-Coordinates Sensors::getCalibratedMagneticField()
+Coordinates Sensors::GetCalibratedMagneticField()
 {
     Coordinates coords = getMagneticField();
 
@@ -87,7 +82,7 @@ void Sensors::CalibrateMagnetoMeter()
     delay(1000);
 }
 
-bool Sensors::initializeAll()
+bool Sensors::InitializeAll()
 {
     bool initializedTemp = initializeTempAndHumiditySensor();
     bool initializedIMU = initializeIMUSensor();
@@ -95,7 +90,7 @@ bool Sensors::initializeAll()
     return initializedTemp && initializedIMU && initializedBaro;
 }
 
-bool Sensors::initializeIMUSensor()
+bool Sensors::InitializeIMUSensor()
 {
     if (IMU.begin())
     {
@@ -107,7 +102,7 @@ bool Sensors::initializeIMUSensor()
     }
 }
 
-bool Sensors::initializeBarometricSensor()
+bool Sensors::InitializeBarometricSensor()
 {
     if (BARO.begin())
     {
@@ -119,7 +114,7 @@ bool Sensors::initializeBarometricSensor()
     }
 }
 
-bool Sensors::initializeTempAndHumiditySensor()
+bool Sensors::InitializeTempAndHumiditySensor()
 {
     if (HTS.begin())
     {

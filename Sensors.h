@@ -9,19 +9,18 @@
 class Sensors
 {
 public:
-    Sensors();
-    int getTemperature();
-    float getPressure();
-    int getHumidity();
-    Coordinates getAccelerationDirection();
-    Coordinates getGyroscopeDirection();
-    Coordinates getMagneticField();
-    Coordinates getCalibratedMagneticField();
+    int GetTemperature();
+    float GetPressure();
+    int GetHumidity();
+    Coordinates GetAccelerationDirection();
+    Coordinates GetGyroscopeDirection();
+    Coordinates GetMagneticField();
+    Coordinates GetCalibratedMagneticField();
     void CalibrateMagnetoMeter();
-    bool initializeBarometricSensor();
-    bool initializeIMUSensor();
-    bool initializeTempAndHumiditySensor();
-    bool initializeAll();
+    bool InitializeBarometricSensor();
+    bool InitializeIMUSensor();
+    bool InitializeTempAndHumiditySensor();
+    bool InitializeAll();
 
 private:
     float CalculateNormalizedValue(float value, float min, float max);
