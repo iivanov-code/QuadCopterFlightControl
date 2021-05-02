@@ -64,7 +64,7 @@ Coordinates Sensors::GetMagneticField()
 
 Coordinates Sensors::GetCalibratedMagneticField()
 {
-    Coordinates coords = getMagneticField();
+    Coordinates coords = GetMagneticField();
 
     float x = CalculateNormalizedValue(coords.X, magneticFieldMinValues.X, magneticFieldMaxValues.X);
     float y = CalculateNormalizedValue(coords.Y, magneticFieldMinValues.Y, magneticFieldMaxValues.Y);
@@ -79,14 +79,23 @@ Coordinates Sensors::GetCalibratedMagneticField()
 
 void Sensors::CalibrateMagnetoMeter()
 {
-    delay(1000);
+    Coordinates mag;
+    int startTime = millis();
+    while ((millis() - startTime) < ConstConfig::MAGNETOMETER_CALIB_TIME_MS) //Do calibration loop for 8 seconds
+    {
+        mag = GetMagneticField();
+        SetMinMax(&magneticFieldMinValues.X, &magneticFieldMaxValues.X, mag.X);
+        SetMinMax(&magneticFieldMinValues.Y, &magneticFieldMaxValues.Y, mag.Y);
+        SetMinMax(&magneticFieldMinValues.Z, &magneticFieldMaxValues.Z, mag.Z);
+        delay(100);
+    }
 }
 
 bool Sensors::InitializeAll()
 {
-    bool initializedTemp = initializeTempAndHumiditySensor();
-    bool initializedIMU = initializeIMUSensor();
-    bool initializedBaro = initializeBarometricSensor();
+    bool initializedTemp = InitializeTempAndHumiditySensor();
+    bool initializedIMU = InitializeIMUSensor();
+    bool initializedBaro = InitializeBarometricSensor();
     return initializedTemp && initializedIMU && initializedBaro;
 }
 
@@ -123,6 +132,19 @@ bool Sensors::InitializeTempAndHumiditySensor()
     else
     {
         return false;
+    }
+}
+
+void Sensors::SetMinMax(float *min, float *max, float value)
+{
+    if (value < *min)
+    {
+        *min = value;
+    }
+
+    if (value > *max)
+    {
+        *max = value;
     }
 }
 

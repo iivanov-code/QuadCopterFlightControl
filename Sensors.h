@@ -5,6 +5,7 @@
 #include <Arduino_LPS22HB.h>
 #include <Arduino_HTS221.h>
 #include "Coordinates.h"
+#include "ConstConfig.h"
 
 class Sensors
 {
@@ -24,6 +25,7 @@ public:
 
 private:
     float CalculateNormalizedValue(float value, float min, float max);
+    void SetMinMax(float *min, float *max, float value);
     Coordinates acceleration;
     Coordinates gyroscope;
     Coordinates magneticField;

@@ -13,6 +13,7 @@
     "arduino.defaultBaudRate": 115200,
     "files.associations": {
         "cmath": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "cstddef": "cpp"
     }
 }

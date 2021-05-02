@@ -7,11 +7,10 @@ BluetoothCommunicator::BluetoothCommunicator(uint16_t dataRate)
 
 BluetoothCommunicator::~BluetoothCommunicator()
 {
-  delete motorControl;
   Serial.end();
 }
 
-void BluetoothCommunicator::CheckForCommands(void (*callback)(BluetoothPacket *))
+void BluetoothCommunicator::CheckForCommands(void (*callback)(BluetoothPacket *packet))
 {
   BluetoothPacket *packet = ReadFromBluetooth();
 
@@ -21,7 +20,7 @@ void BluetoothCommunicator::CheckForCommands(void (*callback)(BluetoothPacket *)
 
     if (packet->IsValid)
     {
-      *callback(packet);
+      (*callback)(packet);
     }
     else
     {
@@ -47,7 +46,7 @@ void BluetoothCommunicator::SendPacket(BluetoothPacket *responsePacket, bool isF
   byte *dataBuffer = new byte[dataSize];
 
   dataBuffer[0] = responsePacket->BeginCommand;
-  dataBuffer[1] = (byte)responsePacket->CommandType;
+  dataBuffer[1] = (byte)responsePacket->Command;
   dataBuffer[2] = responsePacket->CommandDataSize;
 
   for (int i = 3; i < responsePacket->CommandDataSize; i++)
@@ -78,7 +77,7 @@ BluetoothPacket *BluetoothCommunicator::ReadFromBluetooth()
     byte beginStream = Serial.read();
     if (packet->BeginCommand == beginStream)
     {
-      packet->CommandType = (CommandTypes)Serial.read();
+      packet->Command = (CommandTypes)Serial.read();
       packet->CommandDataSize = Serial.read();
       byte *dataBuffer = new byte[packet->CommandDataSize];
       packet->CommandData = dataBuffer;
@@ -113,7 +112,7 @@ BluetoothPacket *BluetoothCommunicator::CopyPacket(BluetoothPacket *packet)
 {
   BluetoothPacket *newPacket = new BluetoothPacket();
   newPacket->BeginCommand = packet->BeginCommand;
-  newPacket->CommandType = packet->CommandType;
+  newPacket->Command = packet->Command;
   return newPacket;
 }
 

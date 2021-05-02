@@ -13,6 +13,7 @@ namespace ConstConfig
     const float Pi = 3.1415926535897932384626433832795;
     const float RADIANS = 180 / Pi;
     const float GRAVITY = 9.8;
+    const int MAGNETOMETER_CALIB_TIME_MS = 8000;
 
     const float QUAD_MASS = 2000;
     const uint8_t MOTORS_COUNT = 4;

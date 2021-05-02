@@ -12,7 +12,7 @@ QuadCopterControl::QuadCopterControl(uint8_t *motorPins)
 
 void QuadCopterControl::Initilize()
 {
-    sensors->initializeAll();
+    sensors->InitializeAll();
 }
 
 void QuadCopterControl::Yaw(int8_t targetDegrees)
