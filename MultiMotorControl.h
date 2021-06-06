@@ -8,11 +8,12 @@ using namespace std;
 
 class MultiMotorControl
 {
-  public:
-    MultiMotorControl(uint8_t motorsCount, uint8_t* pins, bool bidirectional = false);
-    ThrottleControl* getMotor(uint8_t i);
+public:
+  MultiMotorControl(uint8_t motorsCount, uint8_t *pins, bool bidirectional = false);
+  ThrottleControl *getMotor(uint8_t i);
+  ThrottleControl *operator[](int);
 
-  private:
-    ThrottleControl** motors;
+private:
+  ThrottleControl **motors;
 };
 #endif

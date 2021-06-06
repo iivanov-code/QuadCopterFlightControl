@@ -1,18 +1,32 @@
 #include "Sensors.h"
-#include "BluetoothCommunicator.h"
+#include "MultiMotorControl.h"
+#include "ConstConfig.h"
+#include "BLECommunicator.h"
 
 Sensors *sensors;
-BluetoothCommunicator *communicator;
-bool sensorsInitilized = false;
+BLECommunicator *bleCommunicator;
+MultiMotorControl *motors;
 
 void setup()
 {
-  Serial.begin(9600);
+
+  // communicator = new BluetoothCommunicator();
+  uint8_t *motorPins = new uint8_t[4];
+  motorPins[0] = D2;
+  motorPins[1] = D3;
+  motorPins[2] = D4;
+  motorPins[3] = D5;
+
   sensors = new Sensors();
-  communicator = new BluetoothCommunicator();
-  sensorsInitilized = sensors->InitializeAll();
+  if (sensors->InitializeAll())
+  {
+    motors = new MultiMotorControl(ConstConfig::MOTORS_COUNT, motorPins, false);
+    bleCommunicator = new BLECommunicator(sensors, motors);
+  }
 }
 
 void loop()
 {
+  bleCommunicator->listenForConnections();
+  delay(1000);
 }

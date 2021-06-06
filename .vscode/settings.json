@@ -2,7 +2,7 @@
     "arduino.path": "C:/Program Files (x86)/Arduino",
     "arduino.commandPath": "arduino_debug.exe",
     "arduino.logLevel": "info",
-    "arduino.allowPDEFiletype": false, 
+    "arduino.allowPDEFiletype": false,
     "arduino.enableUSBDetection": true,
     "arduino.disableTestingOpen": false,
     "arduino.skipHeaderProvider": false,
@@ -14,6 +14,20 @@
     "files.associations": {
         "cmath": "cpp",
         "chrono": "cpp",
-        "cstddef": "cpp"
+        "cstddef": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp"
+    },
+    //"workbench.colorTheme": "Visual Studio Blue",
+    "workbench.colorCustomizations": {
+        "tab.inactiveBackground": "#b7c2e0",
+        //"tab.inactiveBackground": "#5d6b99"
     }
 }
