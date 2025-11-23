@@ -1,5 +1,6 @@
 #ifndef PID_MODEL
 #define PID_MODEL
+
 struct PIDModel
 {
     PIDModel()

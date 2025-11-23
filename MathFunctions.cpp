@@ -80,40 +80,29 @@ float MathFunctions::CalculatePID(float input, float target, PIDModel *pid)
     float error = target - input; //Calculate Setpoint Error
 
     //Proportional
-    pid->Proportional = pid->Proportional * error;
+    float pTerm = pid->Proportional * error;
 
-    //Integral
-    pid->Integral = pid->Integral * error * ConstConfig::DELTA_T + pid->Integral;
+    //Integral (accumulate error)
+    pid->IntegralError += error * ConstConfig::DELTA_T;
 
     //Derivative
-    pid->Derivative = pid->Derivative * (error - pid->PrevError) * ConstConfig::DELTA_T;
+    float dTerm = pid->Derivative * (error - pid->PrevError) / ConstConfig::DELTA_T;
 
     //For next derivative term
     pid->PrevError = error;
 
-    //For next integral term
-    pid->IntegralError += pid->Integral * error * ConstConfig::DELTA_T;
-
-    if (abs(pid->Integral) > ConstConfig::INTEGRAL_THRESHOLD)
+    //Anti-windup: clamp integral error
+    if (pid->IntegralError > ConstConfig::INTEGRAL_THRESHOLD)
     {
-        if (pid->IntegralError > 0)
-        {
-            pid->IntegralError = ConstConfig::INTEGRAL_THRESHOLD;
-        }
-        else
-        {
-            pid->IntegralError = -ConstConfig::INTEGRAL_THRESHOLD;
-        }
-
-        if (pid->Integral > 0)
-        {
-            pid->Integral = ConstConfig::INTEGRAL_THRESHOLD;
-        }
-        else
-        {
-            pid->Integral = -ConstConfig::INTEGRAL_THRESHOLD;
-        }
+        pid->IntegralError = ConstConfig::INTEGRAL_THRESHOLD;
+    }
+    else if (pid->IntegralError < -ConstConfig::INTEGRAL_THRESHOLD)
+    {
+        pid->IntegralError = -ConstConfig::INTEGRAL_THRESHOLD;
     }
 
-    return pid->Proportional + pid->Integral + pid->Derivative;
+    //Calculate integral term
+    float iTerm = pid->Integral * pid->IntegralError;
+
+    return pTerm + iTerm + dTerm;
 }

@@ -15,8 +15,10 @@ namespace ConstConfig
     const float GRAVITY = 9.8;
     const int MAGNETOMETER_CALIB_TIME_MS = 8000;
 
-    const float QUAD_MASS = 2000;
+    const float QUAD_MASS = 2.0; // kg
     const uint8_t MOTORS_COUNT = 4;
+    const uint8_t MIN_THROTTLE = 0;
+    const uint8_t MAX_THROTTLE = 255;
 };
 
 #endif
