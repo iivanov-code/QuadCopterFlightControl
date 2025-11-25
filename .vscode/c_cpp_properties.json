@@ -3,30 +3,32 @@
     "configurations": [
         {
             "name": "Arduino",
-            "compilerPath": "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\bin\\arm-none-eabi-g++",
+            "compilerPath": "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\bin\\arm-none-eabi-g++",
             "compilerArgs": [
                 "-nostdlib"
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino",
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\variants\\ARDUINO_NANO33BLE",
-                "C:\\Users\\iivanov.TL-HQ\\Documents\\Arduino\\libraries\\Arduino_LSM9DS1\\src",
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\libraries\\Wire",
-                "C:\\Users\\iivanov.TL-HQ\\Documents\\Arduino\\libraries\\Arduino_LPS22HB\\src",
-                "C:\\Users\\iivanov.TL-HQ\\Documents\\Arduino\\libraries\\Arduino_HTS221\\src",
-                "C:\\Users\\iivanov.TL-HQ\\Documents\\Arduino\\libraries\\ArduinoBLE\\src",
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\api\\deprecated",
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\api\\deprecated-avr-comp",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\arm-none-eabi",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\backward",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include-fixed",
-                "c:\\users\\iivanov.tl-hq\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include"
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\4.0.10\\**",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\4.0.10\\libraries\\ArduinoBLE\\src\\**",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\variants\\ARDUINO_NANO33BLE",
+                "${env:USERPROFILE}\\Documents\\Arduino\\libraries\\Arduino_LSM9DS1\\src",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\libraries\\Wire",
+                "${env:USERPROFILE}\\Documents\\Arduino\\libraries\\Arduino_LPS22HB\\src",
+                "${env:USERPROFILE}\\Documents\\Arduino\\libraries\\Arduino_HTS221\\src",
+                "${env:USERPROFILE}\\Documents\\Arduino\\libraries\\ArduinoBLE\\src",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\api\\deprecated",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\api\\deprecated-avr-comp",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\arm-none-eabi",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\backward",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include-fixed",
+                "${env:LOCALAPPDATA}\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include"
             ],
             "forcedInclude": [
-                "C:\\Users\\iivanov.TL-HQ\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\Arduino.h"
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\2.1.0\\cores\\arduino\\Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",

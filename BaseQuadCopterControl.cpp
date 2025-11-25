@@ -24,6 +24,16 @@ public:
         yawPid = new PIDModel();
     }
 
+    ~BaseQuadCopterControl()
+    {
+        delete motors;
+        delete sensors;
+        delete rollPid;
+        delete pitchPid;
+        delete yawPid;
+        delete[] motorThrottles;
+    }
+
     void Initilize()
     {
         sensors->InitializeAll();
@@ -84,7 +94,7 @@ public:
         motors->getMotor(3)->ChangeThrottle((uint8_t)motorThrottles[3]);
     }
 
-    float CalculateGravityCompensation(float pitch, float roll)
+    virtual float CalculateGravityCompensation(float pitch, float roll)
     {
         // Gravity compensation scaled to throttle range (0-255)
         // Assumes level flight needs ~50% throttle, compensate for tilt
@@ -93,7 +103,7 @@ public:
     }
 
 protected:
-    void ApplyPitch(float controlPitch)
+    virtual void ApplyPitch(float controlPitch)
     {
         short throttle = (short)controlPitch;
         motorThrottles[0] += throttle;
@@ -102,7 +112,7 @@ protected:
         motorThrottles[3] -= throttle;
     }
 
-    void ApplyRoll(float controlRoll)
+    virtual void ApplyRoll(float controlRoll)
     {
         short throttle = (short)controlRoll;
         motorThrottles[0] += throttle;
@@ -111,7 +121,7 @@ protected:
         motorThrottles[3] += throttle;
     }
 
-    void ApplyYaw(float controlYaw)
+    virtual void ApplyYaw(float controlYaw)
     {
         short throttle = (short)controlYaw;
         motorThrottles[0] += throttle;
@@ -120,7 +130,7 @@ protected:
         motorThrottles[3] -= throttle;
     }
 
-    void ApplyThrottle()
+    virtual void ApplyThrottle()
     {
         float mgFactor = CalculateGravityCompensation(imuControlValues.Pitch, imuControlValues.Roll);
         float throttle = remoteControlValues.Throttle + mgFactor;
@@ -132,8 +142,6 @@ protected:
     }
 
     virtual ControlErrors GetControlErrors() = 0;
-    
-    virtual ~BaseQuadCopterControl() {}
 
     Sensors *sensors;
     MultiMotorControl *motors;

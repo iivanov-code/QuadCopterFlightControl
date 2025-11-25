@@ -1,11 +1,14 @@
 #ifndef SENSORS
 #define SENSORS
 
+#include "Arduino.h"
 #include <Arduino_LSM9DS1.h>
 #include <Arduino_LPS22HB.h>
 #include <Arduino_HTS221.h>
 #include "Coordinates.h"
 #include "ConstConfig.h"
+
+//C:\Users\iivanov.TL-HQ\AppData\Local\Arduino15\packages\arduino\hardware\mbed_nano\4.0.10\cores\arduino
 
 class Sensors
 {
