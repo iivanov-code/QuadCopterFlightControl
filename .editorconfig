@@ -1,0 +1,46 @@
+# EditorConfig for C/C++ Arduino Project
+# https://editorconfig.org
+
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C/C++ source and header files
+[*.{c,cpp,cc,cxx,h,hpp,hxx,ino}]
+indent_style = space
+indent_size = 4
+max_line_length = 120
+
+# Arduino sketch files
+[*.ino]
+indent_style = space
+indent_size = 2
+
+# JSON configuration files
+[*.json]
+indent_style = space
+indent_size = 4
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Makefiles require tabs
+[Makefile]
+indent_style = tab
+
+# YAML files
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# XML files
+[*.xml]
+indent_style = space
+indent_size = 2

@@ -58,10 +58,10 @@ public:
         }
 
         // Send to motors
-        motors->getMotor(0)->ChangeThrottle((uint8_t)motorThrottles[0]);
-        motors->getMotor(1)->ChangeThrottle((uint8_t)motorThrottles[1]);
-        motors->getMotor(2)->ChangeThrottle((uint8_t)motorThrottles[2]);
-        motors->getMotor(3)->ChangeThrottle((uint8_t)motorThrottles[3]);
+        motors->getMotor(0)->SetThrottlePercent((uint8_t)motorThrottles[0]);
+        motors->getMotor(1)->SetThrottlePercent((uint8_t)motorThrottles[1]);
+        motors->getMotor(2)->SetThrottlePercent((uint8_t)motorThrottles[2]);
+        motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
     }
 
 protected:

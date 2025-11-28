@@ -35,7 +35,7 @@ BLECommunicator::BLECommunicator(Sensors *sensors, MultiMotorControl *motors)
         BLE.addService(sensorsService);
 
         commandsService.addCharacteristic(motorSpeedCharacteristic);
-        //motorSpeedCharacteristic.setEventHandler(BLEWritten, BLECommunicator::motorsThrottled);
+        // motorSpeedCharacteristic.setEventHandler(BLEWritten, BLECommunicator::motorsThrottled);
 
         BLE.addService(commandsService);
 
@@ -111,10 +111,10 @@ void BLECommunicator::listenForConnections()
 
 void BLECommunicator::rampAllMotors(uint8_t throttle)
 {
-    _motors->getMotor(0)->ChangeThrottle(throttle);
-    _motors->getMotor(1)->ChangeThrottle(throttle);
-    _motors->getMotor(2)->ChangeThrottle(throttle);
-    _motors->getMotor(3)->ChangeThrottle(throttle);
+    _motors->getMotor(0)->SetThrottlePercent(throttle);
+    _motors->getMotor(1)->SetThrottlePercent(throttle);
+    _motors->getMotor(2)->SetThrottlePercent(throttle);
+    _motors->getMotor(3)->SetThrottlePercent(throttle);
 }
 
 void BLECommunicator::setTemperature(int8_t temperature)

@@ -11,6 +11,9 @@
 #include "MathFunctions.h"
 #include "ConstConfig.h"
 
+const uint8_t MIN_PERCENT = 0;
+const uint8_t MAX_PERCENT = 100;
+
 class BaseQuadCopterControl
 {
 public:
@@ -33,6 +36,12 @@ public:
         delete yawPid;
         delete[] motorThrottles;
     }
+
+     // Or strongly-typed (C++11+)
+    enum class PercentageLimits : uint8_t {
+        Min = 0,
+        Max = 100
+    };
 
     void Initilize()
     {
@@ -81,22 +90,22 @@ public:
         // Clamp motor values to valid range (0-255)
         for (int i = 0; i < ConstConfig::MOTORS_COUNT; i++)
         {
-            if (motorThrottles[i] < 0)
-                motorThrottles[i] = 0;
-            if (motorThrottles[i] > 255)
-                motorThrottles[i] = 255;
+            if (motorThrottles[i] < MIN_PERCENT)
+                motorThrottles[i] = MIN_PERCENT;
+            if (motorThrottles[i] > MAX_PERCENT)
+                motorThrottles[i] = MAX_PERCENT ;
         }
 
         // Send to motors
-        motors->getMotor(0)->ChangeThrottle((uint8_t)motorThrottles[0]);
-        motors->getMotor(1)->ChangeThrottle((uint8_t)motorThrottles[1]);
-        motors->getMotor(2)->ChangeThrottle((uint8_t)motorThrottles[2]);
-        motors->getMotor(3)->ChangeThrottle((uint8_t)motorThrottles[3]);
+        motors->getMotor(0)->SetThrottlePercent((uint8_t)motorThrottles[0]);
+        motors->getMotor(1)->SetThrottlePercent((uint8_t)motorThrottles[1]);
+        motors->getMotor(2)->SetThrottlePercent((uint8_t)motorThrottles[2]);
+        motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
     }
 
     virtual float CalculateGravityCompensation(float pitch, float roll)
     {
-        // Gravity compensation scaled to throttle range (0-255)
+        // Gravity compensation scaled to throttle range (0-100)
         // Assumes level flight needs ~50% throttle, compensate for tilt
         float tiltFactor = 1.0 / (cos(pitch * ConstConfig::Pi / 180.0) * cos(roll * ConstConfig::Pi / 180.0));
         return (tiltFactor - 1.0) * remoteControlValues.Throttle;

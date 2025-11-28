@@ -5,9 +5,11 @@
             "name": "Arduino",
             "compilerPath": "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\bin\\arm-none-eabi-g++",
             "compilerArgs": [
-                "-nostdlib"
+                "-nostdlib",
+                "-Wall",
+                "-Wextra"
             ],
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "gcc-arm",
             "includePath": [
                 "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\4.0.10\\**",
                 "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\mbed_nano\\4.0.10\\libraries\\ArduinoBLE\\src\\**",
