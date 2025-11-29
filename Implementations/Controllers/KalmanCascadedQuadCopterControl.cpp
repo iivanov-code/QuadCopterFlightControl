@@ -1,4 +1,4 @@
-#include "../Interfaces/Controllers/KalmanCascadedQuadCopterControl.h"
+#include "../../Interfaces/Controllers/KalmanCascadedQuadCopterControl.h"
 
 KalmanCascadedQuadCopterControl::KalmanCascadedQuadCopterControl(uint8_t *motorPins)
     : BaseQuadCopterControl(motorPins)
@@ -31,7 +31,7 @@ KalmanCascadedQuadCopterControl::~KalmanCascadedQuadCopterControl()
     delete yawKalman;
 }
 
-void KalmanCascadedQuadCopterControl::RunControlLoop() override
+void KalmanCascadedQuadCopterControl::RunControlLoop()
 {
     // Read sensor data
     Coordinates acc = sensors->GetAccelerationDirection();
@@ -96,7 +96,7 @@ void KalmanCascadedQuadCopterControl::RunControlLoop() override
     motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
 }
 
-ControlErrors KalmanCascadedQuadCopterControl::GetControlErrors() override
+ControlErrors KalmanCascadedQuadCopterControl::GetControlErrors()
 {
     // Cascaded PID with Kalman-filtered angles
 

@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_MODE_CPP
-#define CONTROLLER_MODE_CPP
+#ifndef CONTROLLER_MODE
+#define CONTROLLER_MODE
 
 enum ControllerMode
 {

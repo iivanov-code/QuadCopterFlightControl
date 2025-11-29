@@ -1,6 +1,7 @@
-#include "../Interfaces/Controllers/CascadedQuadCopterControl.h"
+#include "../../Interfaces/Controllers/CascadedQuadCopterControl.h"
 
-CascadedQuadCopterControl::CascadedQuadCopterControl(uint8_t *motorPins) : BaseQuadCopterControl(motorPins)
+CascadedQuadCopterControl::CascadedQuadCopterControl(uint8_t *motorPins)
+    : BaseQuadCopterControl(motorPins)
 {
     // Replace single PIDs with cascaded PIDs
     delete rollPid;
@@ -19,7 +20,7 @@ CascadedQuadCopterControl::~CascadedQuadCopterControl()
     delete yawCascaded;
 }
 
-void CascadedQuadCopterControl::RunControlLoop() override
+void CascadedQuadCopterControl::RunControlLoop()
 {
     // Read sensor data
     Coordinates acc = sensors->GetAccelerationDirection();
@@ -57,7 +58,7 @@ void CascadedQuadCopterControl::RunControlLoop() override
     motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
 }
 
-ControlErrors CascadedQuadCopterControl::GetControlErrors() override
+ControlErrors CascadedQuadCopterControl::GetControlErrors()
 {
     // Cascaded PID: Outer loop (angle) -> Inner loop (rate)
 

@@ -1,7 +1,4 @@
-#ifndef ADAPTIVE_QUAD_COPTER_CONTROL
-#define ADAPTIVE_QUAD_COPTER_CONTROL
-
-#include "../Interfaces/Controllers/AdaptiveQuadCopterControl.h"
+#include "../../Interfaces/Controllers/AdaptiveQuadCopterControl.h"
 
 AdaptiveQuadCopterControl::AdaptiveQuadCopterControl(uint8_t *motorPins)
     : BaseQuadCopterControl(motorPins)
@@ -26,7 +23,7 @@ AdaptiveQuadCopterControl::~AdaptiveQuadCopterControl()
     delete yawAdaptive;
 }
 
-void AdaptiveQuadCopterControl::RunControlLoop() override
+void AdaptiveQuadCopterControl::RunControlLoop()
 {
     // Read sensor data
     Coordinates acc = sensors->GetAccelerationDirection();
@@ -70,7 +67,7 @@ void AdaptiveQuadCopterControl::RunControlLoop() override
     motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
 }
 
-ControlErrors AdaptiveQuadCopterControl::GetControlErrors() override
+ControlErrors AdaptiveQuadCopterControl::GetControlErrors()
 {
     // Calculate errors
     float rollError = remoteControlValues.Roll - imuControlValues.Roll;

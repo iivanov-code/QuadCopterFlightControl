@@ -1,6 +1,5 @@
 #include "../Interfaces/MultiMotorControl.h"
 
-
 MultiMotorControl::MultiMotorControl(uint8_t motorsCount, uint8_t *pins, bool bidirectional)
 {
     motors = new ThrottleControl *[motorsCount];

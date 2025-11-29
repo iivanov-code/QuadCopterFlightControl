@@ -1,26 +1,18 @@
 #include "../Interfaces/ThrottleControl.h"
 
-ThrottleControl::ThrottleControl(uint8_t _pin, bool _bidirectional = false)
-    : BaseThrottleControl::BaseThrottleControl(_pin, _bidirectional)
-{
-    MinThrottle = 1000;
-    MaxThrottle = 2000;
-    esc.attach(pin);
-}
-
-void ThrottleControl::Arm() override
+void ThrottleControl::Arm()
 {
     // Arm ESC by sending minimum pulse
     esc.writeMicroseconds(MinThrottle);
 }
 
-void ThrottleControl::Disarm() override
+void ThrottleControl::Disarm()
 {
     // Disarm ESC by sending zero pulse
     esc.detach();
 }
 
-uint8_t ThrottleControl::SetThrottlePercent(float percentage) override
+uint8_t ThrottleControl::SetThrottlePercent(float percentage)
 {
     if (percentage < 0.0)
     {
@@ -46,7 +38,7 @@ uint8_t ThrottleControl::SetThrottlePercent(float percentage) override
     return throttleValue;
 }
 
-void ThrottleControl::SetThrottle(uint8_t throttle) override
+void ThrottleControl::SetThrottle(uint8_t throttle)
 {
     if (throttle < MinThrottle)
     {

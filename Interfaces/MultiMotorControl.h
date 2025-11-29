@@ -2,7 +2,7 @@
 #define MULTI_MOTOR_CONTROL
 
 #include "Arduino.h"
-#include "../Interfaces/ThrottleControl.h"
+#include "ThrottleControl.h"
 
 using namespace std;
 

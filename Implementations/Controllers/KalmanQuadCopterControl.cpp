@@ -1,4 +1,4 @@
-#include "../Interfaces/Controllers/KalmanQuadCopterControl.h"
+#include "../../Interfaces/Controllers/KalmanQuadCopterControl.h"
 
 KalmanQuadCopterControl::KalmanQuadCopterControl(uint8_t *motorPins)
     : BaseQuadCopterControl(motorPins)
@@ -20,7 +20,7 @@ KalmanQuadCopterControl::~KalmanQuadCopterControl()
     delete yawKalman;
 }
 
-void KalmanQuadCopterControl::RunControlLoop() override
+void KalmanQuadCopterControl::RunControlLoop()
 {
     // Read sensor data
     Coordinates acc = sensors->GetAccelerationDirection();
@@ -84,7 +84,7 @@ void KalmanQuadCopterControl::RunControlLoop() override
     motors->getMotor(3)->SetThrottlePercent((uint8_t)motorThrottles[3]);
 }
 
-ControlErrors KalmanQuadCopterControl::GetControlErrors() override
+ControlErrors KalmanQuadCopterControl::GetControlErrors()
 {
     // Standard PID control using Kalman-filtered angles
     float controlRoll = MathFunctions::CalculatePID(

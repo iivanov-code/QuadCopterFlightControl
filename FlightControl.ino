@@ -1,4 +1,5 @@
 #include "Interfaces/QuadCopterControl.h"
+#include "Imports.h"
 #include "Interfaces/Controllers/CascadedQuadCopterControl.h"
 #include "Interfaces/Controllers/AdaptiveQuadCopterControl.h"
 #include "Interfaces/Controllers/KalmanQuadCopterControl.h"
