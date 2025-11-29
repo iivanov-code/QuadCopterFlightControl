@@ -12,6 +12,7 @@ public:
         pin = _pin;
         bidirectional = _bidirectional;
     }
+    virtual ~BaseThrottleControl() {}
 
     virtual uint8_t SetThrottlePercent(float percentage) = 0;
     virtual void Arm() = 0;

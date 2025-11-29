@@ -46,6 +46,9 @@ void setup()
 
   quadControl->Initilize();
 
+  // motorPins array no longer needed after controller constructs motors
+  delete[] motorPins;
+
   // Set initial targets for testing
   quadControl->Thrust(10); // 10% throttle
   quadControl->Roll(0);    // Level roll

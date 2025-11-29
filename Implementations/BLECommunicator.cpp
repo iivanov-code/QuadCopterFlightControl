@@ -5,19 +5,8 @@ BLECommunicator::BLECommunicator(Sensors *sensors, MultiMotorControl *motors)
     _sensors = sensors;
     _motors = motors;
 
-    // begin initialization
     if (BLE.begin())
     {
-        BLEService sensorsService(BLEConstants::SENSORS_SERVICE_UUID);
-        BLEService commandsService(BLEConstants::COMMANDS_SERVICE_UUID);
-        BLETypedCharacteristic<int8_t> temperatureCharacteristic(BLEConstants::TEMPERATURE_CHAR_UUID, BLERead | BLENotify);
-        BLETypedCharacteristic<int8_t> humidityCharacteristic(BLEConstants::HUMIDITY_CHAR_UUID, BLERead | BLENotify);
-        BLETypedCharacteristic<float> pressureCharacteristic(BLEConstants::PRESSUERE_CHAR_UUID, BLERead | BLENotify);
-        BLETypedCharacteristic<Coordinates> accCoordinatesCharacteristic(BLEConstants::ACC_COORDS_UUID, BLERead | BLENotify);
-        BLETypedCharacteristic<Coordinates> magCoordinatesCharacteristic(BLEConstants::MAG_COORDS_UUID, BLERead | BLENotify);
-        BLETypedCharacteristic<Coordinates> gyroCoordinatesCharacteristic(BLEConstants::GYRO_COORDS_UUID, BLERead | BLENotify);
-        BLECharacteristic motorSpeedCharacteristic(BLEConstants::MOTORS_SPEED_UUID, BLERead | BLEWrite, 1, true);
-
         BLE.setLocalName(BLEConstants::BLUETOOTH_NAME);
         BLE.setDeviceName(BLEConstants::BLUETOOTH_NAME);
         BLE.setAppearance(BLEConstants::GENERIC_AIRCRAFT);
@@ -30,34 +19,29 @@ BLECommunicator::BLECommunicator(Sensors *sensors, MultiMotorControl *motors)
         sensorsService.addCharacteristic(magCoordinatesCharacteristic);
         sensorsService.addCharacteristic(gyroCoordinatesCharacteristic);
 
-        // add service
         BLE.addService(sensorsService);
 
         commandsService.addCharacteristic(motorSpeedCharacteristic);
-        // motorSpeedCharacteristic.setEventHandler(BLEWritten, BLECommunicator::motorsThrottled);
-
         BLE.addService(commandsService);
 
-        // set the initial value for the characeristic:
+        // Initialize values
         temperatureCharacteristic.writeValue(_temperature);
         humidityCharacteristic.writeValue(_humidity);
         pressureCharacteristic.writeValue(_pressure);
-        accCoordinatesCharacteristic.writeValue(_accCoords);
-        magCoordinatesCharacteristic.writeValue(_magCoords);
-        gyroCoordinatesCharacteristic.writeValue(_gyroCoords);
+        accCoordinatesCharacteristic.writeValue((uint8_t *)&_accCoords, sizeof(Coordinates));
+        magCoordinatesCharacteristic.writeValue((uint8_t *)&_magCoords, sizeof(Coordinates));
+        gyroCoordinatesCharacteristic.writeValue((uint8_t *)&_gyroCoords, sizeof(Coordinates));
         uint8_t motor = 0;
         motorSpeedCharacteristic.writeValue(motor);
 
-        _temperatureCharacteristic = &temperatureCharacteristic;
-        _humidityCharacteristic = &humidityCharacteristic;
-        _pressureCharacteristic = &pressureCharacteristic;
-        _accCoordinatesCharacteristic = &accCoordinatesCharacteristic;
-        _magCoordinatesCharacteristic = &magCoordinatesCharacteristic;
-        _gyroCoordinatesCharacteristic = &gyroCoordinatesCharacteristic;
-
-        // start advertising
         BLE.advertise();
     }
+}
+
+BLECommunicator::~BLECommunicator()
+{
+    BLE.stopAdvertise();
+    BLE.end();
 }
 
 // void BLECommunicator::motorsThrottled(BLEDevice central, BLECharacteristic characteristic)
@@ -79,28 +63,28 @@ void BLECommunicator::listenForConnections()
         {
             // if the remote device wrote to the characteristic,
             // use the value to control the LED:
-            if (_motorSpeedCharacteristic->written())
+            if (motorSpeedCharacteristic.written())
             {
                 uint8_t motorPercentage = 0;
-                _motorSpeedCharacteristic->readValue(motorPercentage);
+                motorSpeedCharacteristic.readValue(motorPercentage);
             }
 
             if (_temperature != _sensors->GetTemperature())
             {
                 _temperature = _sensors->GetTemperature();
-                _temperatureCharacteristic->writeValue(_temperature);
+                temperatureCharacteristic.writeValue(_temperature);
             }
 
             if (_pressure != _sensors->GetPressure())
             {
                 _pressure = _sensors->GetPressure();
-                _pressureCharacteristic->writeValue(_pressure);
+                pressureCharacteristic.writeValue(_pressure);
             }
 
             if (_humidity != _sensors->GetHumidity())
             {
                 _humidity = _sensors->GetHumidity();
-                _humidityCharacteristic->writeValue(_humidity);
+                humidityCharacteristic.writeValue(_humidity);
             }
 
             delay(500);
@@ -120,7 +104,7 @@ void BLECommunicator::setTemperature(int8_t temperature)
 {
     if (temperature != _temperature)
     {
-        this->_temperatureCharacteristic->writeValue(temperature);
+        this->temperatureCharacteristic.writeValue(temperature);
     }
 }
 
@@ -128,7 +112,7 @@ void BLECommunicator::setPressure(float pressure)
 {
     if (pressure != _pressure)
     {
-        this->_humidityCharacteristic->writeValue(pressure);
+        this->pressureCharacteristic.writeValue(pressure);
     }
 }
 
@@ -136,30 +120,30 @@ void BLECommunicator::setHumidity(int8_t humidity)
 {
     if (humidity != _humidity)
     {
-        this->_pressureCharacteristic->writeValue(humidity);
+        this->humidityCharacteristic.writeValue(humidity);
     }
 }
 
 void BLECommunicator::setAccerelationDirection(Coordinates coords)
 {
-    _accCoordinatesCharacteristic->writeValue(coords);
+    accCoordinatesCharacteristic.writeValue((uint8_t *)&coords, sizeof(Coordinates));
 }
 
 void BLECommunicator::setGyroscopeDirection(Coordinates coords)
 {
-    _gyroCoordinatesCharacteristic->writeValue(coords);
+    gyroCoordinatesCharacteristic.writeValue((uint8_t *)&coords, sizeof(Coordinates));
 }
 
 void BLECommunicator::setMagnetometerDirection(Coordinates coords)
 {
-    _magCoordinatesCharacteristic->writeValue(coords);
+    magCoordinatesCharacteristic.writeValue((uint8_t *)&coords, sizeof(Coordinates));
 }
 
 bool BLECommunicator::tryReadMotorSpeeds(uint8_t &motorPercent)
 {
-    if (_motorSpeedCharacteristic->valueUpdated())
+    if (motorSpeedCharacteristic.valueUpdated())
     {
-        _motorSpeedCharacteristic->readValue(motorPercent);
+        motorSpeedCharacteristic.readValue(motorPercent);
         return true;
     }
 

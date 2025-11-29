@@ -10,10 +10,12 @@ class MultiMotorControl
 {
 public:
   MultiMotorControl(uint8_t motorsCount, uint8_t *pins, bool bidirectional = false);
+  ~MultiMotorControl();
   ThrottleControl *getMotor(uint8_t i);
   ThrottleControl *operator[](int);
 
 private:
   ThrottleControl **motors;
+  uint8_t count;
 };
 #endif

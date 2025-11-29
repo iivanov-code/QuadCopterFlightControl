@@ -12,6 +12,7 @@ class BLECommunicator
 {
 public:
     BLECommunicator(Sensors *sensors, MultiMotorControl *motors);
+    ~BLECommunicator();
     void setTemperature(int8_t temperature);
     void setHumidity(int8_t humidity);
     void setPressure(float pressure);
@@ -32,16 +33,17 @@ private:
     Sensors *_sensors;
     MultiMotorControl *_motors;
 
-    BLEService *sensorsService;
-    BLEService *commandsService;
+    // Use concrete members instead of pointers to avoid dangling references
+    BLEService sensorsService{BLEConstants::SENSORS_SERVICE_UUID};
+    BLEService commandsService{BLEConstants::COMMANDS_SERVICE_UUID};
 
-    BLETypedCharacteristic<int8_t> *_temperatureCharacteristic;
-    BLETypedCharacteristic<int8_t> *_humidityCharacteristic;
-    BLETypedCharacteristic<float> *_pressureCharacteristic;
-    BLETypedCharacteristic<Coordinates> *_accCoordinatesCharacteristic;
-    BLETypedCharacteristic<Coordinates> *_magCoordinatesCharacteristic;
-    BLETypedCharacteristic<Coordinates> *_gyroCoordinatesCharacteristic;
-    BLECharacteristic *_motorSpeedCharacteristic;
+    BLECharacteristic temperatureCharacteristic{BLEConstants::TEMPERATURE_CHAR_UUID, BLERead | BLENotify, sizeof(int8_t)};
+    BLECharacteristic humidityCharacteristic{BLEConstants::HUMIDITY_CHAR_UUID, BLERead | BLENotify, sizeof(int8_t)};
+    BLECharacteristic pressureCharacteristic{BLEConstants::PRESSUERE_CHAR_UUID, BLERead | BLENotify, sizeof(float)};
+    BLECharacteristic accCoordinatesCharacteristic{BLEConstants::ACC_COORDS_UUID, BLERead | BLENotify, sizeof(Coordinates)};
+    BLECharacteristic magCoordinatesCharacteristic{BLEConstants::MAG_COORDS_UUID, BLERead | BLENotify, sizeof(Coordinates)};
+    BLECharacteristic gyroCoordinatesCharacteristic{BLEConstants::GYRO_COORDS_UUID, BLERead | BLENotify, sizeof(Coordinates)};
+    BLECharacteristic motorSpeedCharacteristic{BLEConstants::MOTORS_SPEED_UUID, BLERead | BLEWrite, sizeof(uint8_t), true};
     void rampAllMotors(uint8_t throttle);
     //void motorsThrottled(BLEDevice central, BLECharacteristic characteristic);
 };

@@ -2,11 +2,21 @@
 
 MultiMotorControl::MultiMotorControl(uint8_t motorsCount, uint8_t *pins, bool bidirectional)
 {
+    count = motorsCount;
     motors = new ThrottleControl *[motorsCount];
     for (int i = 0; i < motorsCount; i++)
     {
         motors[i] = new ThrottleControl(pins[i], bidirectional);
     }
+}
+
+MultiMotorControl::~MultiMotorControl()
+{
+    for (int i = 0; i < count; i++)
+    {
+        delete motors[i];
+    }
+    delete[] motors;
 }
 
 ThrottleControl *MultiMotorControl::operator[](int index)

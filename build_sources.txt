@@ -1,0 +1,7 @@
+Implementations/KalmanFilter.cpp
+Implementations/MathFunctions.cpp
+Implementations/Sensors.cpp
+Implementations/Controllers/KalmanCascadedQuadCopterControl.cpp
+Implementations/Controllers/CascadedQuadCopterControl.cpp
+Implementations/Controllers/AdaptiveQuadCopterControl.cpp
+Implementations/Controllers/KalmanQuadCopterControl.cpp

@@ -27,7 +27,7 @@ public:
         yawPid = new PIDModel();
     }
 
-    ~BaseQuadCopterControl()
+    virtual ~BaseQuadCopterControl()
     {
         delete motors;
         delete sensors;
