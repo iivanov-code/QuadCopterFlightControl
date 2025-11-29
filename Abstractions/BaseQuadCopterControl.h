@@ -1,15 +1,15 @@
 #ifndef BASE_QUAD_COPTER_CONTROL
 #define BASE_QUAD_COPTER_CONTROL
 
-#include "Sensors.h"
-#include "MultiMotorControl.h"
-#include "QuadCopterTypes.h"
-#include "Coordinates.h"
-#include "ControlModel.h"
-#include "PIDModel.h"
-#include "ControlErrors.h"
-#include "MathFunctions.h"
-#include "ConstConfig.h"
+#include "../Interfaces/Sensors.h"
+#include "../Interfaces/MultiMotorControl.h"
+#include "../Models/QuadCopterTypes.h"
+#include "../Models/Coordinates.h"
+#include "../Models/ControlModel.h"
+#include "../Models/PIDModel.h"
+#include "../Models/ControlErrors.h"
+#include "../Interfaces/MathFunctions.h"
+#include "../Constants/ConstConfig.h"
 
 const uint8_t MIN_PERCENT = 0;
 const uint8_t MAX_PERCENT = 100;

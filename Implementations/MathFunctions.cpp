@@ -1,4 +1,4 @@
-#include "MathFunctions.h"
+#include "../Interfaces/MathFunctions.h"
 
 //O - pitch
 float MathFunctions::GetPitchAngle(Coordinates acc)

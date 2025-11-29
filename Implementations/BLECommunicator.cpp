@@ -1,5 +1,4 @@
-#include "BLECommunicator.h"
-#include "BLEConstants.h"
+#include "../Interfaces/BLECommunicator.h"
 
 BLECommunicator::BLECommunicator(Sensors *sensors, MultiMotorControl *motors)
 {

@@ -2,9 +2,11 @@
 #define BLE_COMMUNICATOR
 
 #include <ArduinoBLE.h>
-#include "Coordinates.h"
-#include "Sensors.h"
-#include "MultiMotorControl.h"
+#include "../Models/Coordinates.h"
+#include "../Interfaces/Sensors.h"
+#include "../Interfaces/MultiMotorControl.h"
+#include "../Constants/BLEConstants.h"
+
 
 class BLECommunicator
 {

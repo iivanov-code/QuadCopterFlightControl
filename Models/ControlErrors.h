@@ -1,5 +1,6 @@
 #ifndef CONTROL_ERRORS
 #define CONTROL_ERRORS
+
 struct ControlErrors
 {
     ControlErrors()

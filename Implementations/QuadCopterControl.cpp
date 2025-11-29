@@ -1,4 +1,4 @@
-#include "QuadCopterControl.h"
+#include "../Interfaces/QuadCopterControl.h"
 
 QuadCopterControl::QuadCopterControl(uint8_t *motorPins) : BaseQuadCopterControl(motorPins)
 {

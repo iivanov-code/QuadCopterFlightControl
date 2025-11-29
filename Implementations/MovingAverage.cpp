@@ -1,4 +1,4 @@
-#include "MovingAverage.h"
+#include "../Interfaces/MovingAverage.h"
 
 template <typename T> T MovingAverage<T>::Zero = (T)0;
 

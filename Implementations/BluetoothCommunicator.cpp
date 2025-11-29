@@ -1,4 +1,4 @@
-#include "BluetoothCommunicator.h"
+#include "../Interfaces/BluetoothCommunicator.h"
 
 BluetoothCommunicator::BluetoothCommunicator(uint16_t dataRate)
 {

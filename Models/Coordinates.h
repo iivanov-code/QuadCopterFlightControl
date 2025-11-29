@@ -1,5 +1,6 @@
 #ifndef COORDINATES
 #define COORDINATES
+
 struct Coordinates
 {
     Coordinates()

@@ -1,7 +1,7 @@
 #ifndef BLUETOOTH_COMMUNICATOR
 #define BLUETOOTH_COMMUNICATOR
 
-#include "BluetoothPacket.h"
+#include "../Models/BluetoothPacket.h"
 #include "Arduino.h"
 
 class BluetoothCommunicator

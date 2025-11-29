@@ -3,10 +3,10 @@
 
 #include <math.h>
 #include <fastmath.h>
-#include "Coordinates.h"
-#include "ControlModel.h"
-#include "PIDModel.h"
-#include "ConstConfig.h"
+#include "../Models/Coordinates.h"
+#include "../Models/ControlModel.h"
+#include "../Models/PIDModel.h"
+#include "../Constants/ConstConfig.h"
 
 class MathFunctions
 {

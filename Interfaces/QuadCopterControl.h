@@ -1,7 +1,7 @@
 #ifndef QUAD_COPTER_CONTROL
 #define QUAD_COPTER_CONTROL
 
-#include "BaseQuadCopterControl.cpp"
+#include "../Abstractions/BaseQuadCopterControl.h"
 
 class QuadCopterControl : public BaseQuadCopterControl
 {

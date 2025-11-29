@@ -1,0 +1,13 @@
+#ifndef CONTROLLER_MODE_CPP
+#define CONTROLLER_MODE_CPP
+
+enum ControllerMode
+{
+    SINGLE,
+    CASCADED,
+    ADAPTIVE,
+    KALMAN,
+    KALMAN_CASCADED
+};
+
+#endif // CONTROLLER_MODE_CPP
